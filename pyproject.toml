@@ -31,7 +31,7 @@ ignore = ["D100", "D104", "D203", "D213"]
 quote-style = "double"
 indent-style = "space"
 line-ending = "lf"
-skip-magic-trailing-comma = true
+skip-magic-trailing-comma = false
 
 [tool.mypy]
 python_version = "3.10"
@@ -44,3 +44,6 @@ testpaths = ["tests"]
 
 [tool.hatch.metadata]
 allow-direct-references = true
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**.py" = ["D"]

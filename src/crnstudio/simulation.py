@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Dict, Iterable, List, Mapping, Sequence
+from typing import Dict, List, Mapping, Sequence
 
 from .model import Reaction, Species, ensure_concentrations, update_concentrations
 
@@ -11,12 +11,32 @@ class DeterministicSimulator:
     """Fixed-step Runge–Kutta 4 ODE integrator for CRNs."""
 
     def __init__(self, species: Sequence[Species], reactions: Sequence[Reaction]) -> None:
+        """Initialize the simulator with species and reactions.
+
+        Args:
+            species: Sequence of Species present in the network.
+            reactions: Sequence of Reaction objects.
+
+        Raises:
+            ValueError: If no species are provided.
+
+        """
         if not species:
             raise ValueError("At least one species is required")
         self.species = list(species)
         self.reactions = list(reactions)
 
     def derivative(self, t: float, concentrations: Mapping[str, float]) -> Dict[str, float]:
+        """Compute the time derivatives of concentrations at time t.
+
+        Args:
+            t: Current time.
+            concentrations: Mapping from species name to concentration.
+
+        Returns:
+            Mapping from species name to dC/dt.
+
+        """
         changes: Dict[str, float] = {sp.name: 0.0 for sp in self.species}
         for reaction in self.reactions:
             rate = reaction.rate_law(t, concentrations)
@@ -27,6 +47,20 @@ class DeterministicSimulator:
     def simulate(
         self, t_span: Sequence[float], initial_conditions: Mapping[str, float], dt: float
     ) -> List[Dict[str, float]]:
+        """Simulate the ODEs using a fixed-step RK4 integrator.
+
+        Args:
+            t_span: Sequence [t0, t1] specifying simulation interval.
+            initial_conditions: Mapping from species name to initial concentration.
+            dt: Time step size.
+
+        Returns:
+            List of concentration snapshots (mapping name->value), including the initial state.
+
+        Raises:
+            ValueError: If t_span is invalid or dt is non-positive.
+
+        """
         if len(t_span) != 2 or t_span[1] <= t_span[0]:
             raise ValueError("t_span must be [t0, t1] with t1 > t0")
         if dt <= 0:
