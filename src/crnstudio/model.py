@@ -90,9 +90,7 @@ def ensure_concentrations(
 
 
 def update_concentrations(
-    concentrations: MutableMapping[str, float],
-    derivatives: Mapping[str, float],
-    delta: float,
+    concentrations: MutableMapping[str, float], derivatives: Mapping[str, float], delta: float
 ) -> None:
     """Apply a time step update to concentrations in-place."""
 

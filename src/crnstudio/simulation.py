@@ -10,11 +10,7 @@ from .model import Reaction, Species, ensure_concentrations, update_concentratio
 class DeterministicSimulator:
     """Fixed-step Runge–Kutta 4 ODE integrator for CRNs."""
 
-    def __init__(
-        self,
-        species: Sequence[Species],
-        reactions: Sequence[Reaction],
-    ) -> None:
+    def __init__(self, species: Sequence[Species], reactions: Sequence[Reaction]) -> None:
         if not species:
             raise ValueError("At least one species is required")
         self.species = list(species)
@@ -29,10 +25,7 @@ class DeterministicSimulator:
         return changes
 
     def simulate(
-        self,
-        t_span: Sequence[float],
-        initial_conditions: Mapping[str, float],
-        dt: float,
+        self, t_span: Sequence[float], initial_conditions: Mapping[str, float], dt: float
     ) -> List[Dict[str, float]]:
         if len(t_span) != 2 or t_span[1] <= t_span[0]:
             raise ValueError("t_span must be [t0, t1] with t1 > t0")
