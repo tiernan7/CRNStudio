@@ -27,6 +27,9 @@ target-version = "py310"
 select = ["E", "F", "B", "I", "ANN", "D"]
 ignore = ["D100", "D104", "D203", "D213"]
 
+[tool.ruff.lint.isort]
+known-first-party = ["crnstudio"]
+
 [tool.ruff.format]
 quote-style = "double"
 indent-style = "space"
@@ -41,6 +44,7 @@ packages = ["crnstudio"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+pythonpath = ["src"]
 
 [tool.hatch.metadata]
 allow-direct-references = true

@@ -12,8 +12,11 @@ pip install -e .[dev]
 Before submitting changes, ensure the following checks pass:
 
 ruff format
+
 ruff check
+
 mypy
+
 pytest
 
 Continuous integration enforces these checks on all pull requests.
